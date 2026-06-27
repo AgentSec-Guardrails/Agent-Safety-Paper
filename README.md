@@ -6,18 +6,23 @@ This repository focuses on safety issues that arise when large language models a
 
 ## Table of Contents
 
-- [Papers](#papers)
-  - [1. Safety Evaluation & Benchmarking](#safety-evaluation--benchmarking)
-  - [2. Safety Defense](#safety-defense)
-    - [2.1 Guardrails](#guardrails)
-      - [2.1.1 Input Guardrail](#input-guard-rail)
-      - [2.1.2 Planner Guardrail](#planner-guard-rail)
-      - [2.1.3 Retrieval / Memory Guardrail](#retrieval-memory-guard-rail)
-      - [2.1.4 Tool Execution Guardrail](#tool-execution-guard-rail)
-      - [2.1.5 Output & Audit Guardrail](#output-audit-guard-rail)
-    - [2.2 Safety Alignment Training](#safety-alignment-training)
-    - [2.3 Trustworthy Agent Architecture](#trustworthy-agent-architecture)
-- [Contributing](#contributing)
+- [LLM Agent Safety](#llm-agent-safety)
+  - [Table of Contents](#table-of-contents)
+  - [Papers](#papers)
+    - [1. Safety Evaluation \& Benchmarking](#1-safety-evaluation--benchmarking)
+    - [2. Safety Defense](#2-safety-defense)
+      - [2.1 Guardrails](#21-guardrails)
+        - [2.1.1 Input Guardrail](#211-input-guardrail)
+        - [2.1.2 Planner Guardrail](#212-planner-guardrail)
+        - [2.1.3 Retrieval / Memory Guardrail](#213-retrieval--memory-guardrail)
+        - [2.1.4 Tool Execution Guardrail](#214-tool-execution-guardrail)
+        - [2.1.5 Output \& Audit Guardrail](#215-output--audit-guardrail)
+      - [2.2 Safety Alignment Training](#22-safety-alignment-training)
+      - [2.3 Trustworthy Agent Architecture](#23-trustworthy-agent-architecture)
+    - [3. VLM agent](#3-vlm-agent)
+      - [3.1 Normal Agents](#31-normal-agents)
+      - [3.2 Embodied Agents](#32-embodied-agents)
+  - [Contributing](#contributing)
 
 ## Papers
 
@@ -178,6 +183,45 @@ System-level designs for safer agents, including permission systems, least-privi
   - 📖 TLDR: Permissive IFC applies information flow control to LLM agents. It tracks how untrusted data propagates through prompts, tool outputs, parameters, and actions, providing a principled way to constrain unsafe information flows while preserving useful agent behavior.
   - 📅 Date: Mar 2025
 
+<a id="VLM-agent"></a>
+### 3. VLM agent
+
+<a id="computer-use-agents"></a>
+#### 3.1 Normal Agents
+
+- [VPI-Bench: Visual Prompt Injection Attacks for Computer-Use Agents](https://arxiv.org/abs/2506.02456)
+  - 🔑 Key: benchmark
+  - 🤖 Agent Type: Web Agent
+  - 📖 TLDR: Computer-Use Agents (CUAs) with full system access enable powerful task automation but pose significant security and privacy risks due to their ability to manipulate files, access user data, and execute arbitrary commands. While prior work has focused on browser-based agents and HTML-level attacks, the vulnerabilities of CUAs remain underexplored. In this paper, we investigate Visual Prompt Injection (VPI) attacks, where malicious instructions are visually embedded within rendered user interfaces, and examine their impact on both CUAs and Browser-Use Agents (BUAs).
+  - 📅 Date: Mar 2026
+
+- [MMSearch-R1: Incentivizing LMMs to Search](https://arxiv.org/abs/2506.20670)
+  - 🔑 Key: benchmark
+  - 🤖 Agent Type: Web Agent
+  - 📖 TLDR: Robust deployment of large multimodal models (LMMs) in real-world scenarios requires access to external knowledge sources, given the complexity and dynamic nature of real-world information. Existing approaches such as retrieval-augmented generation (RAG) and prompt engineered search agents rely on rigid pipelines, often leading to inefficient or excessive search behaviors. We present MMSearch-R1, the first end-to-end reinforcement learning framework that enables LMMs to perform on-demand, multi-turn search in real-world Internet environments.
+  - 📅 Date: Jun 2025
+
+<a id="embodied-agents"></a>
+#### 3.2 Embodied Agents
+
+- [SafeAgentBench: A Benchmark for Safe Task Planning of Embodied LLM Agents](https://arxiv.org/abs/2412.13178)
+  - 🔑 Key: benchmark
+  - 🤖 Agent Type: Embodied Agent
+  - 📖 TLDR: A foreseeable issue is that those embodied agents can also flawlessly execute some hazardous tasks, potentially causing damages in the real world. Existing benchmarks predominantly overlook critical safety risks, focusing solely on planning performance, while a few evaluate LLMs' safety awareness only on non-interactive image-text data. To address this gap, we present SafeAgentBench for safety-aware task planning of embodied LLM agents in interactive simulation environments, covering both explicit and implicit hazards.
+  - 📅 Date: Oct 2025 
+  
+- [AGENTSAFE: Benchmarking the Safety of Embodied Agents on Hazardous Instructions](https://arxiv.org/abs/2412.13178)
+  - 🔑 Key: benchmark
+  - 🤖 Agent Type: Embodied Agent
+  - 📖 TLDR: The integration of vision-language models (VLMs) is driving a new generation of embodied agents capable of operating in human-centered environments. However, as deployment expands, these systems face growing safety risks, particularly when executing hazardous instructions. Current safety evaluation benchmarks remain limited: they cover only narrow scopes of hazards and focus primarily on final outcomes, neglecting the agent's full perception-planning-execution process and thereby obscuring critical failure modes. 
+  - 📅 Date: Oct 2025 
+
+- [BadRobot: Jailbreaking Embodied LLM Agents in the Physical World](https://arxiv.org/abs/2407.20242)
+  - 🔑 Key: attack
+  - 🤖 Agent Type: Embodied Agent
+  - 📖 TLDR: Embodied AI represents systems where AI is integrated into physical entities. Large Language Model (LLM), which exhibits powerful language understanding abilities, has been extensively employed in embodied AI by facilitating sophisticated task planning. However, a critical safety issue remains overlooked: could these embodied LLMs perpetrate harmful behaviors? In response, we introduce BadRobot, a novel attack paradigm aiming to make embodied LLMs violate safety and ethical constraints through typical voice-based user-system interactions. 
+  - 📅 Date: Jun 2026
+
 ## Contributing
 
 Pull requests are welcome. Please add papers using the following format:
@@ -185,7 +229,7 @@ Pull requests are welcome. Please add papers using the following format:
 ```md
 - [title](paper link)
     - 🔑 Key: e.g., attack/defense/evaluation/benchmark/survey/position
-    - 🤖 Agent Type: e.g., Web Agent/Tool Agent/Communicative Agent/OS Agent
+    - 🤖 Agent Type: e.g., Web Agent/Tool Agent/Communicative Agent/OS Agent/Embodied Agent
     - 📖 TLDR: Brief summary of the paper.
     - 📅 Date: e.g., Jan 01, 2025
 ```
