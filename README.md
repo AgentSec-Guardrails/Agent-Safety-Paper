@@ -195,12 +195,6 @@ System-level designs for safer agents, including permission systems, least-privi
   - 📖 TLDR: Computer-Use Agents (CUAs) with full system access enable powerful task automation but pose significant security and privacy risks due to their ability to manipulate files, access user data, and execute arbitrary commands. While prior work has focused on browser-based agents and HTML-level attacks, the vulnerabilities of CUAs remain underexplored. In this paper, we investigate Visual Prompt Injection (VPI) attacks, where malicious instructions are visually embedded within rendered user interfaces, and examine their impact on both CUAs and Browser-Use Agents (BUAs).
   - 📅 Date: Mar 2026
 
-- [MMSearch-R1: Incentivizing LMMs to Search](https://arxiv.org/abs/2506.20670)
-  - 🔑 Key: benchmark
-  - 🤖 Agent Type: Web Agent
-  - 📖 TLDR: Robust deployment of large multimodal models (LMMs) in real-world scenarios requires access to external knowledge sources, given the complexity and dynamic nature of real-world information. Existing approaches such as retrieval-augmented generation (RAG) and prompt engineered search agents rely on rigid pipelines, often leading to inefficient or excessive search behaviors. We present MMSearch-R1, the first end-to-end reinforcement learning framework that enables LMMs to perform on-demand, multi-turn search in real-world Internet environments.
-  - 📅 Date: Jun 2025
-
 <a id="embodied-agents"></a>
 #### 3.2 Embodied Agents
 
@@ -210,7 +204,7 @@ System-level designs for safer agents, including permission systems, least-privi
   - 📖 TLDR: A foreseeable issue is that those embodied agents can also flawlessly execute some hazardous tasks, potentially causing damages in the real world. Existing benchmarks predominantly overlook critical safety risks, focusing solely on planning performance, while a few evaluate LLMs' safety awareness only on non-interactive image-text data. To address this gap, we present SafeAgentBench for safety-aware task planning of embodied LLM agents in interactive simulation environments, covering both explicit and implicit hazards.
   - 📅 Date: Oct 2025 
   
-- [AGENTSAFE: Benchmarking the Safety of Embodied Agents on Hazardous Instructions](https://arxiv.org/abs/2412.13178)
+- [AGENTSAFE: Benchmarking the Safety of Embodied Agents on Hazardous Instructions](https://arxiv.org/abs/2503.04392)
   - 🔑 Key: benchmark
   - 🤖 Agent Type: Embodied Agent
   - 📖 TLDR: The integration of vision-language models (VLMs) is driving a new generation of embodied agents capable of operating in human-centered environments. However, as deployment expands, these systems face growing safety risks, particularly when executing hazardous instructions. Current safety evaluation benchmarks remain limited: they cover only narrow scopes of hazards and focus primarily on final outcomes, neglecting the agent's full perception-planning-execution process and thereby obscuring critical failure modes. 
