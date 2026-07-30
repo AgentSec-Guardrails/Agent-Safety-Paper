@@ -17,7 +17,12 @@ This repository focuses on safety issues that arise when large language models a
         - [2.1.3 Retrieval / Memory Guardrail](#213-retrieval--memory-guardrail)
         - [2.1.4 Tool Execution Guardrail](#214-tool-execution-guardrail)
         - [2.1.5 Output \& Audit Guardrail](#215-output--audit-guardrail)
-      - [2.2 Safety Alignment Training](#22-safety-alignment-training)
+      - [2.2 Safety Alignment by Agent Component](#22-safety-alignment-by-agent-component)
+        - [2.2.1 Overview and General-Purpose Alignment](#221-overview-and-general-purpose-alignment)
+        - [2.2.2 Tool-Use, Action, and Environment Alignment](#222-tool-use-action-and-environment-alignment)
+        - [2.2.3 Planning, Reasoning, and Trajectory Alignment](#223-planning-reasoning-and-trajectory-alignment)
+        - [2.2.4 Memory-Based Alignment](#224-memory-based-alignment)
+        - [2.2.5 Preference and Value Alignment](#225-preference-and-value-alignment)
       - [2.3 Trustworthy Agent Architecture](#23-trustworthy-agent-architecture)
     - [3. VLM agent](#3-vlm-agent)
       - [3.1 Normal Agents](#31-normal-agents)
@@ -140,27 +145,115 @@ Methods that prevent, detect, constrain, or audit unsafe agent behavior. Guardra
 
 
 <a id="safety-alignment-training"></a>
-#### 2.2 Safety Alignment Training
+#### 2.2 Safety Alignment by Agent Component
 
-Papers on making the underlying model or agent policy safer through supervised fine-tuning, RLHF/RLAIF, constitutional methods, refusal training, harmlessness training, tool-use training, adversarial training, and robustness training.
+Papers on aligning an agent's policy and runtime behavior with safety requirements. The groups below follow the **primary component being aligned** rather than treating every method as model fine-tuning. Entries are explicitly marked as training, inference-time defense, or evaluation evidence where appropriate.
 
-- [ToolSafety: A Comprehensive Dataset for Enhancing Safety in LLM-Based Agent Tool Invocations](https://huggingface.co/datasets/jinjinyien/ToolSafety)
-  - 🔑 Key: training / dataset
-  - 🤖 Agent Type: Tool Agents / LLM Agents
-  - 📖 TLDR: ToolSafety introduces a safety fine-tuning dataset for tool-using LLM agents, covering direct harm, indirect harm, and multi-step tool interaction scenarios. Fine-tuning models on ToolSafety improves their ability to maintain safety during complex tool invocation while preserving helpfulness.
-  - 📅 Date: Nov 2025 / EMNLP 2025
+##### 2.2.1 Overview and General-Purpose Alignment
+
+- [A Survey on Alignment for Large Language Model Agents](https://openreview.net/attachment?id=gkxt5kZS84&name=pdf)
+  - 🔑 Key: survey / taxonomy
+  - 🤖 Agent Type: General LLM Agents / Multi-Agent Systems
+  - 📖 TLDR: Surveys agent alignment goals, data, RLHF and adversarial-training methods, scalable oversight, ethical compliance, and long-term behavioral robustness across the full agent stack.
+  - 📅 Date: 2025
 
 - [AgentDoG 1.5: A Lightweight and Scalable Alignment Framework for AI Agent Safety and Security](https://arxiv.org/abs/2605.29801)
-  - 🔑 Key: training / defense / architecture
-  - 🤖 Agent Type: LLM Agents / Tool Agents / Open-world Agents
-  - 📖 TLDR: AgentDoG 1.5 proposes a lightweight and scalable alignment framework for AI agent safety. It updates an agent safety taxonomy, builds a taxonomy-guided data engine with influence-function purification, trains compact safety models with around 1k samples, and deploys them as online guardrails for real-time agent safety moderation.
-  - 📅 Date: May 28, 2026
+  - 🔑 Key: safety SFT / RL / online guardrail
+  - 🤖 Agent Type: Tool Agents / Code Agents / Open-World Agents
+  - 📖 TLDR: Uses a taxonomy-guided data engine and influence-function purification to train compact safety models with roughly 1K samples, then reuses them as low-cost online trajectory guardrails.
+  - 📅 Date: May 28, 2026 / preprint
+
+- [SafeAgent: Safeguarding LLM Agents via an Automated Risk Simulator](https://aclanthology.org/2026.acl-long.1501/)
+  - 🔑 Key: synthetic data / safety fine-tuning
+  - 🤖 Agent Type: Multi-Turn Tool Agents / Terminal Agents
+  - 📖 TLDR: Decomposes risk into instruction-, context-, and action-induced sources, automatically simulates failures, and generates self-reflective safe trajectories for training; reports a 45% average safety gain.
+  - 📅 Date: Jul 2026 / ACL 2026
+
+- [AGrail: A Lifelong Agent Guardrail with Effective and Adaptive Safety Detection](https://aclanthology.org/2025.acl-long.399/)
+  - 🔑 Key: adaptive runtime alignment / lifelong guardrail
+  - 🤖 Agent Type: General LLM Agents / Tool Agents
+  - 📖 TLDR: Generates and optimizes task-specific safety checks at runtime and transfers them across tasks, covering both application-defined risks and systemic confidentiality, integrity, and availability risks.
+  - 📅 Date: Jul 2025 / ACL 2025
+
+##### 2.2.2 Tool-Use, Action, and Environment Alignment
+
+- [AgentAlign: Navigating Safety Alignment in the Shift from Informative to Agentic Large Language Models](https://arxiv.org/abs/2505.23020)
+  - 🔑 Key: behavior-chain synthesis / safety fine-tuning
+  - 🤖 Agent Type: Tool Agents / Action Executors
+  - 📖 TLDR: Instantiates abstract harmful and benign behavior chains in simulated tool environments to create executable multi-step training data, teaching agents to reject harmful tasks without broadly refusing legitimate tool use.
+  - 📅 Date: May 29, 2025 / preprint
+
+- [ToolSafety: A Comprehensive Dataset for Enhancing Safety in LLM-Based Agent Tool Invocations](https://aclanthology.org/2025.emnlp-main.714/)
+  - 🔑 Key: tool-use safety training / dataset
+  - 🤖 Agent Type: Tool Agents
+  - 📖 TLDR: Provides direct-harm, indirect-harm, and multi-step tool trajectories for supervised fine-tuning, targeting failures that only emerge during chained tool invocation.
+  - 📅 Date: Nov 2025 / EMNLP 2025
+
+- [Agent Safety Alignment via Reinforcement Learning](https://arxiv.org/abs/2507.08270)
+  - 🔑 Key: sandboxed RL / dual-channel threat alignment
+  - 🤖 Agent Type: Tool Agents
+  - 📖 TLDR: Jointly aligns responses to malicious user instructions and compromised-tool outputs using structured reasoning, a benign/malicious/sensitive taxonomy, sandboxed execution, and fine-grained rewards.
+  - 📅 Date: Jul 11, 2025 / preprint
+
+- [SafeMCP: Proactive Power Regulation for LLM Agent Defense via Environment-Grounded Look-Ahead Reasoning](https://aclanthology.org/2026.acl-long.522/)
+  - 🔑 Key: capability alignment / proactive tool filtering / RL
+  - 🤖 Agent Type: MCP Agents / Tool Agents
+  - 📖 TLDR: Uses an environment-grounded world model to predict downstream risk, restrict hazardous tool acquisition, and intervene before excessive agent power turns small errors into consequential actions.
+  - 📅 Date: Jul 2026 / ACL 2026
 
 - [Aligned LLMs Are Not Aligned Browser Agents](https://openreview.net/forum?id=NsFZZU9gvk)
-  - 🔑 Key: benchmark / training data
+  - 🔑 Key: browser-action evaluation / alignment gap
   - 🤖 Agent Type: Browser Agents / Web Agents
-  - 📖 TLDR: BrowserART is a red-teaming suite for browser agents that shows refusal-aligned chat models can still take harmful actions in browser settings. It is useful as both an evaluation benchmark and a source of harmful browser-agent cases for safety alignment training.
+  - 📖 TLDR: BrowserART shows that chat-level refusal alignment does not reliably transfer to browser actions, providing 100 harmful behaviors that can support agent-specific red-teaming and alignment data construction.
   - 📅 Date: 2024 / ICLR 2025
+
+- [OS-Sentinel: Towards Safety-Enhanced Mobile GUI Agents via Hybrid Validation in Realistic Workflows](https://aclanthology.org/2026.acl-long.431/)
+  - 🔑 Key: action validation / runtime defense / benchmark
+  - 🤖 Agent Type: Mobile GUI Agents / Computer-Use Agents
+  - 📖 TLDR: Combines a formal verifier for explicit system violations with a VLM contextual judge for semantic risks, checking mobile actions at both step and trajectory levels in a dynamic sandbox.
+  - 📅 Date: Jul 2026 / ACL 2026
+
+##### 2.2.3 Planning, Reasoning, and Trajectory Alignment
+
+- [On-Policy Self-Evolution via Failure Trajectories for Agentic Safety Alignment](https://arxiv.org/abs/2605.11882)
+  - 🔑 Key: trajectory-level alignment / on-policy self-evolution
+  - 🤖 Agent Type: Tool Agents / Long-Horizon Agents
+  - 📖 TLDR: FATE converts verifier-scored failed trajectories into repair supervision and applies Pareto-aware policy optimization to improve security, utility, over-refusal control, and trajectory validity together.
+  - 📅 Date: May 12, 2026 / preprint
+
+- [Think Twice Before You Act: Enhancing Agent Behavioral Safety with Thought Correction](https://arxiv.org/abs/2505.11063)
+  - 🔑 Key: thought alignment / inference-time correction
+  - 🤖 Agent Type: ReAct Agents / Tool Agents
+  - 📖 TLDR: Thought-Aligner detects and rewrites unsafe intermediate thoughts before they determine the next action, steering planning trajectories without modifying the underlying agent.
+  - 📅 Date: May 2025 / preprint
+
+- [GuardAgent: Safeguard LLM Agents via Knowledge-Enabled Reasoning](https://proceedings.mlr.press/v267/xiang25a.html)
+  - 🔑 Key: safety planning / policy-to-code verification
+  - 🤖 Agent Type: Web Agents / Domain Agents
+  - 📖 TLDR: A dedicated guard agent translates natural-language safety requirements into a task plan and executable guardrail code, using retrieved prior experiences to deterministically validate target-agent actions.
+  - 📅 Date: Jul 2025 / ICML 2025
+
+##### 2.2.4 Memory-Based Alignment
+
+- [SafeHarbor: Hierarchical Memory-Augmented Guardrail for LLM Agent Safety](https://arxiv.org/abs/2605.05704)
+  - 🔑 Key: safety memory / training-free guardrail
+  - 🤖 Agent Type: Tool Agents
+  - 📖 TLDR: Stores context-aware defense rules in a hierarchical local memory and evolves the structure through entropy-based splitting and merging, dynamically injecting precise rules to reduce both harmful compliance and over-refusal.
+  - 📅 Date: May 7, 2026 / ICML 2026
+
+##### 2.2.5 Preference and Value Alignment
+
+- [Aligning LLM Agents by Learning Latent Preference from User Edits](https://proceedings.neurips.cc/paper_files/paper/2024/hash/f75744612447126da06767daecce1a84-Abstract-Conference.html)
+  - 🔑 Key: personalized preference alignment / edit feedback
+  - 🤖 Agent Type: Writing Assistants / Interactive Language Agents
+  - 📖 TLDR: PRELUDE and CIPHER infer interpretable, context-dependent user preferences from historical edits and retrieve them to guide future generation without per-user model fine-tuning.
+  - 📅 Date: Dec 2024 / NeurIPS 2024
+
+- [Moral Alignment for LLM Agents](https://arxiv.org/abs/2410.01639)
+  - 🔑 Key: value alignment / intrinsic-reward RL
+  - 🤖 Agent Type: Decision-Making Agents / Multi-Agent Environments
+  - 📖 TLDR: Encodes deontological and utilitarian values as explicit intrinsic rewards for reinforcement learning, offering a more transparent alternative to preference-only alignment and demonstrating cross-environment transfer.
+  - 📅 Date: May 11, 2025 / preprint
 <a id="trustworthy-agent-architecture"></a>
 #### 2.3 Trustworthy Agent Architecture
 
