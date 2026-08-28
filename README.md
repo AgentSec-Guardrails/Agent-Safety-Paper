@@ -27,6 +27,10 @@ This repository focuses on safety issues that arise when large language models a
     - [3. VLM agent](#3-vlm-agent)
       - [3.1 Normal Agents](#31-normal-agents)
       - [3.2 Embodied Agents](#32-embodied-agents)
+    - [4. Multi-Agent Safety & Alignment](#4-multi-agent-safety--alignment)
+      - [4.1 Evaluation, Failure Analysis & Attacks](#41-evaluation-failure-analysis--attacks)
+      - [4.2 Guardrails, Detection & Resilience](#42-guardrails-detection--resilience)
+      - [4.3 Safety Alignment, Oversight & Governance](#43-safety-alignment-oversight--governance)
   - [Contributing](#contributing)
 
 ## Papers
@@ -308,6 +312,172 @@ System-level designs for safer agents, including permission systems, least-privi
   - 🤖 Agent Type: Embodied Agent
   - 📖 TLDR: Embodied AI represents systems where AI is integrated into physical entities. Large Language Model (LLM), which exhibits powerful language understanding abilities, has been extensively employed in embodied AI by facilitating sophisticated task planning. However, a critical safety issue remains overlooked: could these embodied LLMs perpetrate harmful behaviors? In response, we introduce BadRobot, a novel attack paradigm aiming to make embodied LLMs violate safety and ethical constraints through typical voice-based user-system interactions. 
   - 📅 Date: Jun 2026
+
+### 4. Multi-Agent Safety & Alignment
+
+Research focused specifically on safety failures, attacks, guardrails, resilience, oversight, and alignment that emerge when multiple LLM agents communicate, delegate, debate, or act as a coordinated system. Peer-reviewed papers and preprints are labeled separately.
+
+#### 4.1 Evaluation, Failure Analysis & Attacks
+
+- [Why Do Multi-Agent LLM Systems Fail?](https://proceedings.neurips.cc/paper_files/paper/2025/hash/b1041e52d3be19f0a9bc491657488e4a-Abstract-Datasets_and_Benchmarks_Track.html)
+  - 🔑 Key: benchmark / failure taxonomy / evaluation
+  - 🤖 Agent Type: Multi-Agent LLM Systems / Collaborative Agents
+  - 📖 TLDR: Introduces MAST, a taxonomy of 14 failure modes, and MAST-Data, a dataset of more than 1,600 annotated traces from seven multi-agent frameworks. The analysis isolates system-design, inter-agent misalignment, and task-verification failures that aggregate task scores often hide.
+  - 📅 Date: Dec 2025 / NeurIPS D&B 2025
+
+- [Agents Under Siege: Breaking Pragmatic Multi-Agent LLM Systems with Optimized Prompt Attacks](https://aclanthology.org/2025.acl-long.476/)
+  - 🔑 Key: attack / red teaming
+  - 🤖 Agent Type: Communicative Agents / Distributed Multi-Agent Systems
+  - 📖 TLDR: Optimizes how adversarial prompts are distributed across latency- and bandwidth-constrained communication graphs. Its permutation-invariant attack bypasses distributed safeguards and outperforms conventional attacks by up to 7×, while Llama-Guard and PromptGuard variants fail to stop it reliably.
+  - 📅 Date: Jul 2025 / ACL 2025
+
+- [Red-Teaming LLM Multi-Agent Systems via Communication Attacks](https://aclanthology.org/2025.findings-acl.349/)
+  - 🔑 Key: attack / red teaming / benchmark
+  - 🤖 Agent Type: Communicative Agents / Multi-Agent Frameworks
+  - 📖 TLDR: Proposes Agent-in-the-Middle (AiTM), where an adversarial agent intercepts and rewrites inter-agent messages rather than directly compromising model weights. Evaluation across frameworks, topologies, and applications shows that manipulating the communication layer can compromise the full system.
+  - 📅 Date: Jul 2025 / Findings of ACL 2025
+
+- [LLM-based Multi-Agents System Attack via Continuous Optimization with Discrete Efficient Search](https://openreview.net/forum?id=ED5diyzc1C)
+  - 🔑 Key: attack / jailbreak propagation
+  - 🤖 Agent Type: Multi-Agent LLM Systems / Guarded Agent Pipelines
+  - 📖 TLDR: Introduces CODES, a token-level optimization method that plants a self-replicating jailbreak through one intervention on one agent. The malicious prompt propagates across the collaboration graph and can bypass multi-level safeguard modules.
+  - 📅 Date: Oct 2025 / COLM 2025
+
+- [TAMAS: Benchmarking Adversarial Risks in Multi-Agent LLM Systems](https://arxiv.org/abs/2511.05269)
+  - 🔑 Key: benchmark / adversarial robustness
+  - 🤖 Agent Type: Multi-Agent LLM Systems
+  - 📖 TLDR: Provides a dedicated benchmark for adversarial risks in multi-agent LLM systems, measuring how attacks introduced through agents or their messages propagate across different collaboration structures and degrade collective decisions.
+  - 📅 Date: Nov 7, 2025 / preprint
+
+- [Exposing Weak Links in Multi-Agent Systems under Adversarial Prompting](https://arxiv.org/abs/2511.10949)
+  - 🔑 Key: security evaluation / framework / metric
+  - 🤖 Agent Type: Centralized / Decentralized / Hybrid Multi-Agent Systems
+  - 📖 TLDR: Presents SafeAgents and the design-aware DHARMA metric to locate where harmful tasks slip through multi-agent pipelines. It links security failures to atomic delegation that hides intent, missing planner fallbacks, and stratified plans executed without safety re-evaluation.
+  - 📅 Date: Nov 14, 2025 / AAMAS SE 2026
+
+- [Attack the Messages, Not the Agents: A Multi-round Adaptive Stealthy Tampering Framework for LLM-MAS](https://ojs.aaai.org/index.php/AAAI/article/view/40224)
+  - 🔑 Key: communication attack / stealthy tampering
+  - 🤖 Agent Type: Communicative Agents / LLM Multi-Agent Systems
+  - 📖 TLDR: Proposes MAST, an adaptive attack policy trained with Monte Carlo Tree Search and Direct Preference Optimization to tamper with inter-agent messages over multiple rounds while preserving semantic and embedding similarity for stealth.
+  - 📅 Date: Mar 2026 / AAAI 2026
+
+- [Conjunctive Prompt Attacks in Multi-Agent LLM Systems](https://aclanthology.org/2026.acl-long.1577/)
+  - 🔑 Key: compositional attack / routing attack
+  - 🤖 Agent Type: Routed Multi-Agent Systems / Remote Agents
+  - 📖 TLDR: Splits an attack across a benign-looking user trigger and a hidden template in a compromised remote agent. Harm appears only when routing composes the fragments, defeating defenses that inspect messages or components independently.
+  - 📅 Date: Jul 2026 / ACL 2026
+
+- [Web Fraud Attacks Against LLM-Driven Multi-Agent Systems](https://aclanthology.org/2026.findings-acl.686/)
+  - 🔑 Key: web attack / URL manipulation
+  - 🤖 Agent Type: Web-Connected Multi-Agent Systems
+  - 📖 TLDR: Defines 12 web-fraud attacks based on homoglyphs, nested paths, parameter obfuscation, and related URL structures. The attacks exploit trust in links across several multi-agent architectures while requiring little prompt engineering.
+  - 📅 Date: Jul 2026 / Findings of ACL 2026
+
+- [Shadows in the Code: Exploring the Risks and Defenses of LLM-based Multi-Agent Software Development Systems](https://ojs.aaai.org/index.php/AAAI/article/view/41134)
+  - 🔑 Key: attack / defense / code security
+  - 🤖 Agent Type: Multi-Agent Software Engineering Systems / Code Agents
+  - 📖 TLDR: Introduces IMBIA for hiding malicious behavior inside apparently benign software under malicious-user and malicious-agent threat models, then evaluates a targeted Adv-IMBIA defense on ChatDev, MetaGPT, and AgentVerse.
+  - 📅 Date: Mar 2026 / AAAI 2026 Special Track on AI Alignment
+
+- [LieCraft: A Multi-Agent Framework for Evaluating Deceptive Capabilities in Language Models](https://ojs.aaai.org/index.php/AAAI/article/view/41116)
+  - 🔑 Key: deception evaluation / sandbox
+  - 🤖 Agent Type: Social Agents / Hidden-Role Multi-Agent Systems
+  - 📖 TLDR: Builds a long-horizon multiplayer hidden-role sandbox for measuring strategic deception under varying ethical alignments, goals, and oversight conditions instead of relying on short, single-agent deception prompts.
+  - 📅 Date: Mar 2026 / AAAI 2026 Special Track on AI Alignment
+
+- [The Deliberative Illusion: Diagnosing Factual Attrition and Stance Homogenization in Multi-Agent LLM Deliberation](https://arxiv.org/abs/2606.03032)
+  - 🔑 Key: evaluation / misinformation / deliberation failure
+  - 🤖 Agent Type: Debate Agents / Deliberative Multi-Agent Systems
+  - 📖 TLDR: Introduces DelibTrace to track issue-critical facts through multi-agent discussion. It finds that agents may converge while losing up to 72% of critical facts, and that one malicious participant can exploit the shrinking shared context to inject misinformation.
+  - 📅 Date: Jun 2, 2026 / preprint
+
+- [From Shield to Target: Denial-of-Service Attacks on LLM-Based Agent Guardrails](https://arxiv.org/abs/2606.14517)
+  - 🔑 Key: guardrail attack / denial of service
+  - 🤖 Agent Type: Web / Desktop / Code / Multi-Agent Systems
+  - 📖 TLDR: Crafts payloads that trap reasoning-based guardrails in long loops, achieving large token and latency amplification. In multi-agent deployments, a single poisoned document can exhaust shared guardrail capacity and starve other agents.
+  - 📅 Date: Jun 12, 2026 / preprint
+
+#### 4.2 Guardrails, Detection & Resilience
+
+- [On the Resilience of LLM-Based Multi-Agent Collaboration with Faulty Agents](https://proceedings.mlr.press/v267/huang25ay.html)
+  - 🔑 Key: defense / resilience / oversight
+  - 🤖 Agent Type: Collaborative Multi-Agent Systems / Faulty or Malicious Agents
+  - 📖 TLDR: Compares collaboration structures under faulty agents and proposes Challenger and Inspector agents that challenge, review, and repair peer messages. The Inspector recovers up to 96.4% of injected errors, while hierarchical structures are substantially more resilient than common alternatives.
+  - 📅 Date: Jul 2025 / ICML 2025
+
+- [GUARDIAN: Safeguarding LLM Multi-Agent Collaborations with Temporal Graph Modeling](https://proceedings.neurips.cc/paper_files/paper/2025/hash/0bc795afae289ed465a65a3b4b1f4eb7-Abstract-Conference.html)
+  - 🔑 Key: guardrail / anomaly detection / mitigation
+  - 🤖 Agent Type: Collaborative Agents / Agent-to-Agent Systems
+  - 📖 TLDR: Models multi-agent conversations as temporal attributed graphs to detect anomalous agents and edges associated with hallucination amplification or injected-error propagation. Its unsupervised encoder-decoder supports incremental monitoring as collaborations evolve.
+  - 📅 Date: Dec 2025 / NeurIPS 2025
+
+- [BlindGuard: Safeguarding LLM-based Multi-Agent Systems under Unknown Attacks](https://arxiv.org/abs/2508.08127)
+  - 🔑 Key: unsupervised defense / malicious-agent detection
+  - 🤖 Agent Type: Multi-Agent Systems / Communicative Agents
+  - 📖 TLDR: Learns normal individual, neighborhood, and global interaction patterns without malicious-agent labels, then uses corruption-guided contrastive learning to detect prompt injection, memory poisoning, and tool attacks across unseen threat types and topologies.
+  - 📅 Date: Aug 11, 2025 / preprint
+
+- [QuadSentinel: Sequent Safety for Machine-Checkable Control in Multi-agent Systems](https://arxiv.org/abs/2512.16279)
+  - 🔑 Key: multi-agent guardrail / formal policy / runtime enforcement
+  - 🤖 Agent Type: Tool Agents / Multi-Agent Systems / Guard Teams
+  - 📖 TLDR: Compiles natural-language safety policies into machine-checkable sequents and enforces them online with four specialized guard agents: a state tracker, policy verifier, threat watcher, and referee. The design provides trajectory-level allow/deny decisions with auditable rationales.
+  - 📅 Date: Dec 18, 2025 / preprint
+
+- [Explainable and Fine-Grained Safeguarding of LLM Multi-Agent Systems via Bi-Level Graph Anomaly Detection](https://aclanthology.org/2026.acl-long.1407/)
+  - 🔑 Key: guardrail / explainable anomaly detection
+  - 🤖 Agent Type: Multi-Agent Systems / Malicious Agents
+  - 📖 TLDR: XG-Guard combines sentence- and token-level graph representations with a theme-aware detector, identifying malicious agents while attributing the lexical cues responsible for each anomaly score.
+  - 📅 Date: Jul 2026 / ACL 2026
+
+- [SafeSieve: From Heuristics to Experience in Progressive Pruning for LLM-based Multi-Agent Communication](https://ojs.aaai.org/index.php/AAAI/article/view/40236)
+  - 🔑 Key: communication guardrail / topology pruning / robustness
+  - 🤖 Agent Type: LLM Multi-Agent Systems
+  - 📖 TLDR: Progressively prunes weak or risky communication links using semantic initialization, experience feedback, and structure-preserving clustering. It reduces tokens and deployment cost while showing only a small accuracy drop under prompt injection.
+  - 📅 Date: Mar 2026 / AAAI 2026
+
+- [ResMAS: Resilience Optimization in LLM-based Multi-agent Systems](https://ojs.aaai.org/index.php/AAAI/article/view/40824/)
+  - 🔑 Key: resilience / topology optimization / prompt optimization
+  - 🤖 Agent Type: Distributed Multi-Agent Systems
+  - 📖 TLDR: Proactively designs resilient multi-agent systems by training a reward model and topology generator, then optimizing each agent's prompt according to its communication neighborhood. The method improves tolerance to agent failures and generalizes to new tasks and models.
+  - 📅 Date: Mar 2026 / AAAI 2026
+
+- [Beyond the Prompt: Log-Based Threat Detection and Attribution for Multi-Agent LLMs](https://doi.org/10.1016/j.ipm.2026.104768)
+  - 🔑 Key: monitoring / threat attribution / audit
+  - 🤖 Agent Type: Tool-Using Multi-Agent Systems
+  - 📖 TLDR: Proposes ALTEDA, which analyzes execution logs rather than isolated prompts to detect and attribute instruction hijacking, retrieval poisoning, and tool redirection that unfold across agent-to-agent interactions.
+  - 📅 Date: 2026 / Information Processing & Management
+
+#### 4.3 Safety Alignment, Oversight & Governance
+
+- [The Alignment Waltz: Jointly Training Agents to Collaborate for Safety](https://arxiv.org/abs/2510.08240)
+  - 🔑 Key: safety alignment / multi-agent reinforcement learning
+  - 🤖 Agent Type: Conversation Agent / Feedback Agent
+  - 📖 TLDR: WaltzRL jointly trains a conversation agent and an adaptive feedback agent as a positive-sum safety game. The feedback agent repairs unsafe or over-refusing responses instead of simply rejecting them, improving both harmlessness and helpfulness.
+  - 📅 Date: Oct 9, 2025 / preprint
+
+- [AdvEvo-MARL: Shaping Internalized Safety through Adversarial Co-Evolution in Multi-Agent Reinforcement Learning](https://arxiv.org/abs/2510.01586)
+  - 🔑 Key: adversarial alignment / multi-agent reinforcement learning
+  - 🤖 Agent Type: Tool Agents / Multi-Agent Task Systems
+  - 📖 TLDR: Co-evolves attacker agents that generate increasingly strong jailbreaks and defender task agents that internalize resistance during training. It avoids a separate guard-agent bottleneck while keeping attack success below 20% in the reported settings.
+  - 📅 Date: Oct 2, 2025 / preprint
+
+- [Multiple LLM Agents Debate for Equitable Cultural Alignment](https://arxiv.org/abs/2505.24671)
+  - 🔑 Key: cultural alignment / multi-agent debate / fairness
+  - 🤖 Agent Type: Debate Agents / Social Reasoning Agents
+  - 📖 TLDR: Uses debate and adaptive self-reflection between heterogeneous LLM agents to improve cultural-norm reasoning across 75 countries. The approach improves both aggregate accuracy and parity across cultural groups over single-model baselines.
+  - 📅 Date: May 30, 2025 / preprint
+
+- [DialogGuard: Multi-Agent Psychosocial Safety Evaluation of Sensitive LLM Responses](https://arxiv.org/abs/2512.02282)
+  - 🔑 Key: multi-agent oversight / safety evaluation / psychosocial risk
+  - 🤖 Agent Type: Judge Agents / Debate Agents / Voting Agents
+  - 📖 TLDR: Compares single-agent scoring, dual-agent correction, multi-agent debate, and majority voting for privacy, discrimination, manipulation, psychological harm, and abuse. Dual-agent correction and voting best balance human agreement, accuracy, and robustness.
+  - 📅 Date: Dec 1, 2025 / preprint
+
+- [TRiSM for Agentic AI: A Review of Trust, Risk, and Security Management in LLM-based Agentic Multi-Agent Systems](https://doi.org/10.1016/j.aiopen.2026.02.006)
+  - 🔑 Key: survey / governance / trustworthy architecture
+  - 🤖 Agent Type: Agentic Multi-Agent Systems
+  - 📖 TLDR: Extends Trust, Risk, and Security Management to multi-agent LLM deployments, organizing controls around explainability, ModelOps, security, privacy, and lifecycle governance and outlining a roadmap for accountable deployment.
+  - 📅 Date: 2026 / AI Open
 
 ## Contributing
 
